@@ -1,0 +1,6 @@
+*config.ini
+bin/
+include/
+lib/
+local/
+*.sw*
