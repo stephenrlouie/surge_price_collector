@@ -8,7 +8,7 @@ from uber_rides.session import Session
 
 CONFIG_NAME = 'config.ini'
 LOCATION_NAME = 'locations.ini'
-CITIES_LIST = ['BOSTON']
+CITIES_LIST = ['BOSTON', 'SAN_FRAN', 'NEW_YORK']
 
 def get_prices(start_lat, start_lng, end_lat, end_lng):
     cars = []
