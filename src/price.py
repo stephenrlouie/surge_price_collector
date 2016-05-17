@@ -43,8 +43,13 @@ def load_location_data(city_name):
 def get_local_time(time_zone):
     os.environ['TZ'] = time_zone
     time.tzset()
-    return time.strftime("%d-%m-%y %H:%M")
-
+    dayIndex = time.strftime("%w")
+    date = time.strftime("%d")
+    month = time.strftime("%m")
+    year = time.strftime("%Y")
+    hour = time.strftime("%H")
+    minute = time.strftime("%M")
+    return dayIndex, date, month, year, hour, minute
 
 def connect_to_mongo():
     try:
@@ -73,10 +78,10 @@ client = UberRidesClient(session)
 
 for city in CITIES_LIST:
     names, start_lats, start_lngs, end_lats, end_lngs, time_zone = load_location_data(city)
-    localtime = get_local_time(time_zone) 
+    dayIndex, date, month, year, hour, minute = get_local_time(time_zone) 
     for index in range(len(names)):
         cars, surges = get_prices(start_lats[index], start_lngs[index], end_lats[index], end_lngs[index])
-        entry = {'city': city, 'name': names[index], 'time': localtime, 'cars': cars, 'surge': surges} 
+        entry = {'city': city, 'name': names[index],'cars': cars, 'surge': surges, 'dayIndex': dayIndex, 'date': date, 'month': month, 'year': year, 'hour': hour, 'minute': minute} 
         mongo.surge.insert_one(entry)
 
 disconnect_from_mongo(mongo_client)
